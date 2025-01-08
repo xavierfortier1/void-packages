@@ -1,0 +1,34 @@
+# Template file for 'walker'
+pkgname=walker
+version=0.12.6
+revision=1
+build_style=go
+build_helper="gir"
+go_import_path=github.com/abenz1267/walker
+go_package="./cmd"
+hostmakedepends="gobject-introspection pkg-config"
+makedepends="gtk4-layer-shell-devel libvips-devel"
+depends="gtk4-layer-shell $(vopt_if calculator qalculate)
+ $(vopt_if clipboard wl-clipboard)"
+short_desc="Multi-Purpose highly extendable application launcher for Wayland"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="MIT"
+homepage="https://github.com/abenz1267/walker"
+changelog="https://github.com/abenz1267/walker/releases"
+distfiles="https://github.com/abenz1267/walker/archive/v${version}.tar.gz"
+checksum=b9c4db9ea16aff8a4c07a1c345b1e3f70f972dface8412dc43bbaefe81bcd817
+make_check=no # See https://github.com/void-linux/void-packages/actions/runs/12772808861/job/35603242980
+
+# Package options
+build_options="calculator clipboard"
+build_options_default="clipboard"
+desc_option_calculator="Enable calculator module"
+desc_option_clipboard="Enable clipboard module"
+
+do_build() {
+	go build -o ${GOPATH}/bin/${pkgname} ${go_package}
+}
+
+post_install() {
+	vlicense LICENSE
+}
