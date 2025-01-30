@@ -1,0 +1,35 @@
+# Template file for 'spotify-launcher'
+pkgname=spotify-launcher
+version=0.6.5
+revision=1
+build_style=cargo
+hostmakedepends="pkg-config"
+makedepends="liblzma-devel"
+depends="libayatana-appindicator sequoia-sqv zenity"
+checkdepends="sequoia-sqv"
+conf_files="/etc/spotify-launcher.conf"
+short_desc="Client for spotify's apt repository in Rust"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="Apache-2.0 AND MIT"
+homepage="https://github.com/kpcyrd/spotify-launcher"
+changelog="https://github.com/kpcyrd/spotify-launcher/releases"
+distfiles="https://github.com/kpcyrd/spotify-launcher/archive/v${version}.tar.gz"
+checksum=be30e513b8e6d9afd1d2f10cdf39386a95fc02c876dc21b8e2afca31d33d97b6
+
+_pubkey_id="5384CE82BA52C83A"
+
+post_install() {
+	vlicense LICENSE-APACHE
+	vlicense LICENSE-MIT
+
+	vconf "contrib/${pkgname}.conf"
+
+	vinstall "contrib/${pkgname}.desktop" 644 usr/share/applications
+	vinstall "data/pubkey_${_pubkey_id}.gpg" 644 "usr/share/${pkgname}" keyring.pgp
+	vinstall contrib/icons/spotify-linux-512.png 644 usr/share/pixmaps "${pkgname}.png"
+
+	for size in 16 22 24 32 48 64 128 256 512; do
+		vinstall "contrib/icons/spotify-linux-${size}.png" 644 \
+			"usr/share/icons/hicolor/${size}x${size}/apps" "${pkgname}.png"
+	done
+}
