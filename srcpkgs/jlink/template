@@ -1,0 +1,78 @@
+# Template file for 'jlink'
+pkgname=jlink
+version=9.12
+revision=1
+archs="x86_64 aarch64 armv[67]* i686 ~*-musl"
+build_style="fetch"
+hostmakedepends="curl"
+fetch_cmd="curl -d 'accept_license_agreement=accepted&non_emb_ctr=confirmed'"
+short_desc="Segger JLink software & documentation pack for Linux"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="custom:Proprietary"
+homepage="https://www.segger.com/downloads/jlink/"
+changelog="https://www.segger.com/downloads/jlink/ReleaseNotes_JLink.html"
+repository=nonfree
+restricted=yes
+nopie=yes
+nostrip=yes
+
+case "$XBPS_TARGET_MACHINE" in
+	x86_64)
+		_arch="x86_64"
+		;;
+	i686)
+		_arch="i386"
+		;;
+	aarch64)
+		_arch="arm64"
+		;;
+	armv[67]*)
+		_arch="arm"
+		;;
+	*)
+		return;
+		;;
+esac
+
+_archive="JLink_Linux_V${version/./}_${_arch}.tgz"
+distfiles="https://www.segger.com/downloads/jlink/${_archive}"
+
+do_fetch() {
+	mkdir -p "${XBPS_SRCDISTDIR}/${pkgname}-${version}"
+	curl -o "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_archive}" \
+			-d "accept_license_agreement=accepted&non_emb_ctr=confirmed" \
+			"${distfiles}"
+}
+
+do_install() {
+	vmkdir opt/SEGGER/JLink
+	vmkdir usr/bin
+	vmkdir etc
+	vmkdir usr/lib/udev/rules.d
+	vmkdir usr/share/pixmaps
+	vmkdir "usr/share/licenses/${pkgname}"
+	vmkdir "usr/share/doc/${pkgname}"
+
+	for f in J* DevProExe DDC* Samples ETC README.txt Firmwares GDBServer lib*; do
+		vcopy "${f}" opt/SEGGER/JLink
+	done
+	if [ "${XBPS_TARGET_MACHINE}" = "x86_64" ]; then
+		vcopy x86 opt/SEGGER/JLink
+	fi
+
+	vcopy ETC/JFlash etc
+
+	vsed -i 99-jlink.rules -e 's/0x//g'
+	vinstall 99-jlink.rules 644 usr/lib/udev/rules.d
+	vinstall "${FILESDIR}/99-jlink-cmsis-dap.rules" 644 usr/lib/udev/rules.d
+
+	for f in J* DevProExe; do
+		ln -sf "/opt/SEGGER/JLink/${f}" "${DESTDIR}/usr/bin"
+	done
+
+	ln -sf /opt/SEGGER/JLink/Doc/LicenseIncGUI.txt "${DESTDIR}/usr/share/licenses/${pkgname}"
+
+	for f in Doc/Manuals/* Doc/ReleaseNotes; do
+		ln -sf "/opt/SEGGER/JLink/${f}" "${DESTDIR}/usr/share/doc/${pkgname}"
+	done
+}
