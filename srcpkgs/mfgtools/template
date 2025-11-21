@@ -1,0 +1,23 @@
+# Template file for 'mfgtools'
+pkgname=mfgtools
+version=1.5.233
+revision=1
+build_style=cmake
+build_helper=qemu
+hostmakedepends="pkg-config"
+makedepends="bzip2-devel libusb-devel libzstd-devel openssl-devel tinyxml2-devel zlib-devel"
+short_desc="Freescale/NXP I.MX Chip image deploy tools"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="BSD-3-Clause"
+homepage="https://github.com/nxp-imx/mfgtools"
+changelog="https://github.com/nxp-imx/mfgtools/releases"
+distfiles="https://github.com/nxp-imx/mfgtools/releases/download/uuu_${version}/uuu_source-uuu_${version}.tar.gz"
+checksum=aadd7edb9494fe1768f7d2964aa470931da15bd83f82a1829d786f8ec80ca169
+make_check=no # No tests available.
+
+post_install() {
+	local udev_rules="70-uuu.rules"
+	vtargetrun "$DESTDIR"/usr/bin/uuu -udev 1> "$udev_rules" 2>/dev/null
+	vinstall "$udev_rules" 644 usr/lib/udev/rules.d
+	vlicense LICENSE
+}
