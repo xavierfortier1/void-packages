@@ -1,0 +1,26 @@
+# Template file for 'kanata'
+pkgname=kanata
+version=1.10.0
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=cargo
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+# hostmakedepends=""
+# makedepends=""
+# depends=""
+short_desc="Improve keyboard comfort and usability with advanced customization"
+maintainer="Xavier Fortier <xavier.fortier@exfo.com>"
+license="LGPL-3.0-only"
+homepage="https://github.com/jtroo/kanata"
+changelog="https://github.com/jtroo/kanata/releases"
+distfiles="https://github.com/jtroo/kanata/archive/v${version}.tar.gz"
+checksum=6c2d0bec8390cd0d7807aeb2550d0888434cd71d3e8c89a2765c18dd53b946ac
+
+post_install() {
+	vinstall ${FILESDIR}/60-kanata.rules 644 usr/lib/udev/rules.d
+}
