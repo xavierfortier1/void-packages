@@ -1,0 +1,23 @@
+# Template file for 'kanata'
+pkgname=kanata
+version=1.10.1
+revision=1
+build_style=cargo
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+conf_files="/etc/kanata.kbd"
+# depends="libevdev"
+short_desc="Improve keyboard comfort and usability with advanced customization"
+maintainer="Xavier Fortier <xavier.fortier@exfo.com>"
+license="LGPL-3.0-only"
+homepage="https://github.com/jtroo/kanata"
+changelog="https://github.com/jtroo/kanata/releases"
+distfiles="https://github.com/jtroo/kanata/archive/v${version}.tar.gz"
+checksum=c61ea1405e2822ee7c2ab151d8b6160b9061d8bd89abf7ce6abf0da1ce91cea5
+
+post_install() {
+	vsv kanata
+	vsconf cfg_samples/kanata.kbd
+	vinstall ${FILESDIR}/60-kanata.rules 644 usr/lib/udev/rules.d
+}

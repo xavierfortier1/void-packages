@@ -1,0 +1,7 @@
+#!/bin/sh
+exec 2>&1
+
+[ -r ./conf ] && . ./conf
+KANATA_CONF="${KANATA_CONF:-/etc/kanata.kbd}"
+
+exec /usr/bin/kanata --cfg ${KANATA_CONF}
