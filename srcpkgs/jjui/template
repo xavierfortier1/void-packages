@@ -1,0 +1,18 @@
+# Template file for 'jjui'
+pkgname=jjui
+version=0.9.8
+revision=1
+build_style=go
+go_import_path=github.com/idursun/jjui
+go_package=./cmd/jjui
+short_desc="A Jujutsu TUI"
+maintainer="Xavier Fortier <xavier.fortier@exfo.com>"
+license="MIT"
+homepage="https://idursun.github.io/jjui/"
+changelog="https://github.com/idursun/jjui/releases"
+distfiles="https://github.com/idursun/jjui/archive/v${version}.tar.gz"
+checksum=2752e6586c1cd010d077aff202d7da00923c593bd8e124d17c6b44804a521a93
+
+post_install() {
+	vlicense LICENSE
+}
