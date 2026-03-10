@@ -1,0 +1,33 @@
+# Template file for 'gonzo'
+pkgname=gonzo
+version=0.4.1
+revision=1
+build_style=go
+build_helper=qemu
+go_import_path=github.com/control-theory/gonzo
+go_package="./cmd/gonzo"
+go_ldflags="-X main.version=${version}"
+hostmakedepends="nodejs"
+short_desc="MIT"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="GPL-3.0-or-later"
+homepage="https://www.controltheory.com/gonzo/"
+changelog="https://github.com/control-theory/gonzo/releases"
+distfiles="https://github.com/control-theory/gonzo/archive/v${version}.tar.gz"
+checksum=822a723c7e8ac46a10a8a25762b76f98d3da76299dec19154d80db8a072afc31
+
+pre_build() {
+	cd web
+	npm ci
+	npm run build
+}
+
+post_install() {
+	vlicense LICENSE
+
+	local gonzo="${DESTDIR}/usr/bin/gonzo"
+	for shell in bash fish zsh; do
+		vtargetrun ${gonzo} completion ${shell} > gonzo.${shell}
+		vcompletion gonzo.${shell} ${shell}
+	done
+}
