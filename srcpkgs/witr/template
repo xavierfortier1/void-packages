@@ -1,0 +1,19 @@
+# Template file for 'witr'
+pkgname=witr
+version=0.3.1
+revision=1
+build_style=go
+go_import_path=github.com/pranshuparmar/witr
+go_package="./cmd/witr"
+go_ldflags="-X main.version=v${version} -X main.commit=v${version} -X main.buildDate=$(date --utc --date "@$SOURCE_DATE_EPOCH" "+%Y-%m-%d")"
+short_desc="Tool to determine why a process is running"
+maintainer="Filip Rojek <filip@filiprojek.cz>"
+license="Apache-2.0"
+homepage="https://github.com/pranshuparmar/witr"
+changelog="https://github.com/pranshuparmar/witr/releases"
+distfiles="https://github.com/pranshuparmar/witr/archive/refs/tags/v${version}.tar.gz"
+checksum=3e28aa5082b7e83e35e2e8d2b0be30732ac454ac261eb8f315ae8eb30810e6a5
+
+post_install() {
+	vman docs/cli/witr.1
+}
