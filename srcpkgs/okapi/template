@@ -1,0 +1,13 @@
+# Template file for 'okapi'
+pkgname=okapi
+version=0.5.0
+revision=1
+build_style=cargo
+depends="ripgrep"
+short_desc="Find lines across files by regex and edit them all at once"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="Apache-2.0"
+homepage="https://github.com/nk9/okapi"
+changelog="https://raw.githubusercontent.com/nk9/okapi/main/CHANGELOG.md"
+distfiles="https://github.com/nk9/okapi/archive/v${version}.tar.gz"
+checksum=5023b7b8d2af11dd25184a40c28ccd3f50e86b8926a572b804e806da130c23bb
