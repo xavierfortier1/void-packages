@@ -1,0 +1,18 @@
+# Template file for 'kas'
+pkgname=kas
+version=5.2
+revision=1
+build_style=python3-pep517
+hostmakedepends="python3-setuptools python3-wheel"
+depends="python3-GitPython python3-distro python3-jsonschema python3-yaml"
+short_desc="Setup tool for bitbake based projects"
+maintainer="Xavier Fortier <xavier.fortier@proton.me>"
+license="MIT"
+homepage="https://github.com/siemens/kas"
+changelog="https://raw.githubusercontent.com/siemens/kas/master/CHANGELOG.md"
+distfiles="https://github.com/siemens/kas/archive/${version}.tar.gz"
+checksum=b6ff78b9768b80105c06835234fc2878d596f99347c6bcae59b198e809f79550
+
+post_install() {
+	vlicense LICENSE
+}
