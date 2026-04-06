@@ -1,0 +1,12 @@
+# Template file for 'dts-lsp'
+pkgname=dts-lsp
+version=0.1.5
+revision=1
+build_style=cargo
+short_desc="Language Server for Device Tree Source files"
+maintainer="Xavier Fortier <xavier.fortier@exfo.com>"
+license="Apache-2.0"
+homepage="https://github.com/igor-prusov/dts-lsp"
+changelog="https://raw.githubusercontent.com/igor-prusov/dts-lsp/master/CHANGELOG.md"
+distfiles="https://github.com/igor-prusov/dts-lsp/archive/${version}.tar.gz"
+checksum=2fe33bd5a5fcb2fb9a30ad40251ea3c14ec46e45366544f73e1e4d414c48eccc
