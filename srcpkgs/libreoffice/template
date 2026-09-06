@@ -453,6 +453,10 @@ do_configure() {
 		# also disables hamcrest
 		opts+=" --without-junit"
 		bopts+=" --without-junit"
+		opts+=" --with-system-hsqldb"
+		opts+=" --with-hsqldb-jar=/usr/share/java/hsqldb-1.8.0.jar"
+		opts+=" --with-system-beanshell"
+		opts+=" --with-system-rhino"
 	else
 		opts+=" --without-java"
 	fi
@@ -470,10 +474,6 @@ do_configure() {
 	fi
 
 	opts+=" --with-tls=nss"
-	opts+=" --with-system-hsqldb"
-	opts+=" --with-hsqldb-jar=/usr/share/java/hsqldb-1.8.0.jar"
-	opts+=" --with-system-beanshell"
-	opts+=" --with-system-rhino"
 	opts+=" --without-system-libtommath"
 	bopts+=" --without-system-libtommath"
 	opts+=" --without-system-jfreereport"
